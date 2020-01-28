@@ -1,0 +1,28 @@
+version: '2.0'
+services:
+  server:
+    container_name: todo-server
+    restart: always
+    build:
+      context: ./server
+    ports:
+      - '3010:3010'
+    volumes:
+      - ./server:/usr/src/app/server
+    links:
+      - mongo
+  client:
+    container_name: todo-client
+    restart: always
+    build:
+      context: ./client
+    volumes:
+      - ./client:/usr/src/app/client
+    ports:
+      - '3000:3000'
+  mongo:
+    hostname: mongo
+    restart: always
+    image: mongo
+    ports:
+      - '27018:27018'
